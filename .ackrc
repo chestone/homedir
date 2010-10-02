@@ -1,0 +1,9 @@
+--type-set=php=.mg.mgi
+
+--sort-files
+
+--noheading
+--break
+
+--text
+--pager=less -r
