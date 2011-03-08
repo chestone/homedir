@@ -7,3 +7,4 @@
 
 --text
 --pager=less -r
+--smart-case
