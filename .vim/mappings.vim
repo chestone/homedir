@@ -39,6 +39,8 @@ map <F9> :call Toggle80CharacterHighlight()<CR>
 map <F10> :qa
 " Syntax check PHP
 map <F11> :w !php -l<CR>
+map <F11> :w !mg -l<CR>
+map <F11> :w !mgi -l<CR>
 
 " ----------
 " Other keys
@@ -83,6 +85,7 @@ map <C-L> <C-W>l
 
 " Switch tabs easily
 nmap <Tab> gt
+nmap <S-Tab> gT
 
 " CTags
 nmap <leader>t 
