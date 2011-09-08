@@ -116,4 +116,3 @@ bindkey    "^[[3~"          delete-char
 bindkey -e
 PATH=$PATH:/opt/local/bin
 MANPATH=/opt/local/share/man:$MANPATH
-alias vim=/opt/local/bin/vim
