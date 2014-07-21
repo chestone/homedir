@@ -1,118 +1,71 @@
-# mbp
-# set up a fancy prompt
-autoload colors zsh/terminfo
-# don't bother checking for $terminfo[colors] > 8 before calling colors
-# (to initialize $fg and $bg arrays) -- all terms have color these days
-colors
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-# see "which colors" for more codes
-for color in RED REEN YELLOW BLUE MAGENTA CYAN WHITE GREEN BLACK GREY; do
-        eval FG_$color='%{$fg[${(L)color}]%}'
-        eval BG_$color='%{$bg[${(L)color}]%}'
-        eval FG_B_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-        eval BG_B_$color='%{$terminfo[bold]$bg[${(L)color}]%}'
-done
-FG_NO_COLOR="%{$terminfo[sgr0]%}"
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="robbyrussell"
 
-typeset -A altchar
-set -A altchar ${(s..)terminfo[acsc]}
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-PR_SET_CHARSET="%{$terminfo[enacs]%}"
-PR_SHIFT_IN="%{$terminfo[smacs]%}"
-PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
-PR_HBAR=${altchar[q]:--}
-PR_ULCORNER=${altchar[l]:--}
-PR_LLCORNER=${altchar[m]:--}
-PR_LRCORNER=${altchar[j]:--}
-PR_URCORNER=${altchar[k]:--}
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
 
+# Uncomment this to disable bi-weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
 
-case $TERM in (xterm*|screen)
-        set_title_curdir () { print -Pn "\e]0;%n@%m: %~\a" }
-        set_title_curexe () { print -Pn "\e]0;%n@%m [$1]\a" }
-        ;;
-*)
-        set_title_curdir () {}
-        set_title_curexe () {}
-        ;;
-esac
+# Uncomment to change how often before auto-updates occur? (in days)
+# export UPDATE_ZSH_DAYS=13
 
-precmd ()
-{
-        prev_return_val=$?
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
 
-        local TERMWIDTH
-        # rprompt has 1 space to the right, so account for that
-        ((TERMWIDTH = ${COLUMNS}))
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-        # ${# gives length; ${(%) inteprets as prompt, ${:-[string]} lets you
-        # treat a string as a var       
-        local promptsize=${#${(%):-%n@%m --}} # use - as spacer for []
-        local pwdsize=${#${(%):-%~}}
+# Uncomment following line if you want to disable command autocorrection
+# DISABLE_CORRECTION="true"
 
-        PR_FILLBAR=""
-        PR_PWDLEN=""
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+ COMPLETION_WAITING_DOTS="true"
 
-        if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
-                ((PR_PWDLEN=$TERMWIDTH - $promptsize))
-        else
-                PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
-        fi
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-        set_title_curdir
+# Uncomment following line if you want to  shown in the command execution time stamp 
+# in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
+# yyyy-mm-dd
+# HIST_STAMPS="mm/dd/yyyy"
 
-        # username is red if root
-        # no color, bold hostname
-        # grey fillbar
-        # green brackets around pwd
-        # if nonzero exit, red error code display
-        PS1="${PR_SET_CHARSET}%(!.${FG_B_RED}.${FG_B_GREEN})\
-%n${FG_NO_COLOR}@%B%m%b\
-${FG_B_GREY}${PR_SHIFT_IN}${(e)PR_FILLBAR}${PR_SHIFT_OUT}${FG_NO_COLOR}\
-${FG_B_GREEN}[${FG_NO_COLOR}\
-%${PR_PWDLEN}<...<%~%<<${FG_B_GREEN}\
-]${FG_NO_COLOR}
-%(0?.${FG_NO_COLOR}.${BG_B_RED}[${prev_return_val}])\
-${FG_NO_COLOR}%# "
-}
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git npm node redis-cli sublime vagrant)
 
-preexec ()
-{
-        set_title_curexe $1
-}
+source $ZSH/oh-my-zsh.sh
 
-RPS1="(%!)"
+# User configuration
 
-MAILCHECK=0
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/X11/bin:/opt/local/bin:/Users/chestone/.rvm/bin:/Users/chestone/.rvm/bin:/usr/local/mysql/bin:/Users/chestone/bin:/Users/chestone/pear/bin:/usr/local/lib/node_modules:~/bin"
+# export MANPATH="/usr/local/man:$MANPATH"
 
-HISTSIZE=1000
-SAVEHIST=1000
-HISTFILE=~/.zsh_history
-# make history work sanely with multiple shells
-setopt INC_APPEND_HISTORY
-# keep command duration information, etc, in history
-# see history -d, -f -and -D
-setopt EXTENDED_HISTORY
-# keep just 1 copy if you run a command multiple times
-setopt HIST_IGNORE_DUPS
-# tidy up meaningless blanks
-setopt HIST_REDUCE_BLANKS
+# # Preferred editor for local and remote sessions
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
+ else
+   export EDITOR='mvim'
+ fi
 
-export EDITOR=vim
-export VISUAL=vim
-export PAGER=less
+# Compilation flags
+ export ARCHFLAGS="-arch x86_64"
 
-setopt CORRECT
-setopt NOBEEP
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+#
 
-# get good tab completion
-autoload -U compinit
-compinit
-
-bindkey    "^[[3~"          delete-char
-# haven't needed this other term magic yet:
-# bindkey    "^[3;5~"         delete-char
-
-bindkey -e
-PATH=$PATH:/opt/local/bin
-MANPATH=/opt/local/share/man:$MANPATH
+alias vi=vim
