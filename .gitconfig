@@ -1,26 +1,32 @@
 [user]
-	name = Cheston Lee
-    email = chestonlloyd@gmail.com
+  name = Cheston Lee
+  email = cheston@optimizely.com
 [apply]
-    whitespace = fix
+  whitespace = fix
 [core]
-    excludesfile = ~/.gitignore
-    attributesfile = ~/.gitattributes
-    whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+  excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+  whitespace = fix,space-before-tab,tab-in-indent,trailing-space
 [color]
-    ui = auto
+  ui = auto
 [color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
+  current = yellow reverse
+  local = yellow
+  remote = green
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
 [merge]
-    log = true
+  log = true
+[push]
+  default = current
+[alias]
+  st = status --porcelain
+  cm = commit
+
