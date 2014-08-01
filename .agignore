@@ -1,0 +1,6 @@
+js_out/
+sass_cache/
+node_modules/
+bower_components/
+*.sock
+*.swp
